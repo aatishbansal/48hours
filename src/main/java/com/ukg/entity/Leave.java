@@ -10,10 +10,6 @@ public class Leave {
 		
 	private Long amount;
 		
-	private LocalDate startdate;
-		
-	private LocalDate enddate;
-		
 	private String type;
 
 	public Long getEmpid() {
@@ -38,22 +34,6 @@ public class Leave {
 
 	public void setAmount(Long amount) {
 		this.amount = amount;
-	}
-
-	public LocalDate getStartdate() {
-		return startdate;
-	}
-
-	public void setStartdate(LocalDate startdate) {
-		this.startdate = startdate;
-	}
-
-	public LocalDate getEnddate() {
-		return enddate;
-	}
-
-	public void setEnddate(LocalDate enddate) {
-		this.enddate = enddate;
 	}
 
 	public String getType() {

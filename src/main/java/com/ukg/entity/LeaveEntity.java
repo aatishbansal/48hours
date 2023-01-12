@@ -21,12 +21,6 @@ public class LeaveEntity {
 	@Column(name = "Amount")
 	private Long amount;
 	
-	@Column(name = "startdate")
-	private LocalDate startdate;
-	
-	@Column(name = "enddate")
-	private LocalDate enddate;
-	
 	@Column(name = "type")
 	private String type;
 
@@ -52,22 +46,6 @@ public class LeaveEntity {
 
 	public void setAmount(Long amount) {
 		this.amount = amount;
-	}
-
-	public LocalDate getStartdate() {
-		return startdate;
-	}
-
-	public void setStartdate(LocalDate startdate) {
-		this.startdate = startdate;
-	}
-
-	public LocalDate getEnddate() {
-		return enddate;
-	}
-
-	public void setEnddate(LocalDate enddate) {
-		this.enddate = enddate;
 	}
 
 	public String getType() {

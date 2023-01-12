@@ -28,8 +28,6 @@ public class DataController {
 			l.setEmpid(entity.getEmpid());
 			l.setAmount(entity.getAmount());
 			l.setDatesubmit(entity.getDatesubmit());
-			l.setEnddate(entity.getEnddate());
-			l.setStartdate(entity.getStartdate());
 			l.setType(entity.getType());
 			leaveLst.add(l);
 		}
