@@ -121,12 +121,12 @@ public class DataController {
     		int employeeCount = employeeRepository.findTotalEmployees(10l);
 			long count = empWellnessRepository.findcountpergrade(grade, "MONTHLY", 10l);
 			Double percentage = (double) ((count * 100) /employeeCount );
-			return new StressCount().setCount(count).setPercentage(percentage).setType(grade);
+			return new StressCount().setCount(count).setPercentage(percentage + "%").setType(grade);
 		} else {
 			int employeeCount = employeeRepository.findTotalEmployees(10l);
 			long count = empWellnessRepository.findcountpergrade(grade, "QUARTERLY", 10l);
 			Double percentage = (double) ((count * 100) /employeeCount );
-			return new StressCount().setCount(count).setPercentage(percentage).setType(grade);
+			return new StressCount().setCount(count).setPercentage(percentage+ "%").setType(grade);
 		} 
     }
     

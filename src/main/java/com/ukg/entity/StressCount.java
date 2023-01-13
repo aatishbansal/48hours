@@ -3,7 +3,7 @@ package com.ukg.entity;
 public class StressCount {
 
 	private String type;
-	private Double percentage;
+	private String percentage;
 	private Long count;
 	
 	public String getType() {
@@ -13,10 +13,10 @@ public class StressCount {
 		this.type = type;
 		return this;
 	}
-	public Double getPercentage() {
+	public String getPercentage() {
 		return percentage;
 	}
-	public StressCount setPercentage(Double percentage) {
+	public StressCount setPercentage(String percentage) {
 		this.percentage = percentage;
 		return this;
 	}
