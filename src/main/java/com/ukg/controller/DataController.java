@@ -79,7 +79,7 @@ public class DataController {
         return "[{\"empid\":1,\"datesubmit\":\"2023-01-13\",\"amount\":1,\"type\":\"SICK_LEAVE\"},{\"empid\":6,\"datesubmit\":\"2023-01-12\",\"amount\":1,\"type\":\"CASUAL_LEAVE\"}]";
     }
     
-    @GetMapping(path = "/empwellness/{type}")
+    @GetMapping(path = "/empwellness/")
     public List<Wellness> getAllData(@RequestParam(defaultValue = "Last 30 days")  String type, @RequestParam(defaultValue = "High Stress") String grade) {
     	if(type != null) {    		
     		if("Last 30 days".equalsIgnoreCase(type)) {
@@ -96,7 +96,7 @@ public class DataController {
     }
     
     private List<Wellness> createWellnessList(List<WellnessEntity> wellnessEntity) {
-    	List<Wellness> wellnessList = new ArrayList<Wellness>();
+    	List<Wellness> wellnessList = new ArrayList<>();
     	for(WellnessEntity entity : wellnessEntity) {
     		Wellness wellness = new Wellness();
     		wellness.setEmpid(entity.getEmpid()).setGrade(entity.getGrade()).setLeaveAmt(entity.getLeaveAmt()).setShiftAmt(entity.getShiftAmt()).setOvertimeAmt(entity.getOvertimeAmt())
@@ -105,4 +105,6 @@ public class DataController {
     	}
     	return wellnessList;
     }
+    
+    
 }
