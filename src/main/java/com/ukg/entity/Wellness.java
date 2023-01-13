@@ -123,4 +123,11 @@ public class Wellness {
 		this.name = name;
 		return this;
 	}
+
+	@Override
+	public String toString() {
+		return "Wellness [name=" + name + ", empid=" + empid + ", managerid=" + managerid + ", scale=" + scale
+				+ ", grade=" + grade + ", remarks=" + remarks + ", type=" + type + ", leaveAmt=" + leaveAmt
+				+ ", overtimeAmt=" + overtimeAmt + ", shiftAmt=" + shiftAmt + ", recommend=" + recommend + "]";
+	}
 }

@@ -14,4 +14,7 @@ public interface EmpWellnessRepository extends JpaRepository<EmpWellnessEntity, 
 	@Modifying(clearAutomatically = true)
 	@Query(value = "update employeewellbeing.empwellness set scale= ?1, leaveamt= ?2, shiftamt= ?3, overtimeamt= ?4, remarks= ?5, grade= ?6 where empid= ?7 and type= ?8", nativeQuery = true)
 	int update(Long scale, Long leaveAmt, Long shiftAmt, Long overtimeAmt, String remarks, String grade, Long empid, String type);
+	
+	@Query(value = "select count(*) from employeewellbeing.empwellness e where grade=?1 and type=?2", nativeQuery = true)
+	int findcountpergrade(String grade, String type);
 }
