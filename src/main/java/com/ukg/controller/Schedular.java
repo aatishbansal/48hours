@@ -84,13 +84,13 @@ public class Schedular {
 			e.setScale(scale);
 			
 			if(scale<=3) {
-				e.setGrade("RESTING STATE");
+				e.setGrade("Resting State");
 			} else if(scale>=4 && scale <=6) {
-				e.setGrade("LOW STRESS");
+				e.setGrade("Low Stress");
 			} else if(scale>=7 && scale <=10) {
-				e.setGrade("MEDIUM STRESS");
+				e.setGrade("Medium Stress");
 			} else {
-				e.setGrade("HIGH STRESS");
+				e.setGrade("High Stress");
 			}
 			
 			if("MEDIUM STRESS".equalsIgnoreCase(e.getGrade()) || "HIGH STRESS".equalsIgnoreCase(e.getGrade())) {
