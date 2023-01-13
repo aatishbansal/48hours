@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,8 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ukg.dao.EmpRecommendRepository;
 import com.ukg.dao.EmpWellnessRepository;
 import com.ukg.dao.LeaveRepository;
+import com.ukg.dao.WellnessRepository;
 import com.ukg.entity.Leave;
 import com.ukg.entity.LeaveEntity;
+import com.ukg.entity.Wellness;
+import com.ukg.entity.WellnessEntity;
 
 @RestController
 @RequestMapping("/v1/data")
@@ -28,6 +32,9 @@ public class DataController {
 	
 	@Autowired
 	private EmpRecommendRepository empRecommendRepository;
+	
+	@Autowired
+	private WellnessRepository wellnessRepository;
 
 	@GetMapping(path="/leavedetails")
 	public List<Leave> getLeaveDetails() {
@@ -73,4 +80,29 @@ public class DataController {
     }
     
     @GetMapping(path = "/empwellness/{type}")
+    public List<Wellness> getAllData(@PathVariable("type") String type) {
+    	if(type != null) {    		
+    		if("Last 30 days".equalsIgnoreCase(type)) {
+    			List<WellnessEntity> wellnessEntity =  wellnessRepository.getAllData(10l, "MONTHLY");
+    			return createWellnessList(wellnessEntity);
+    		} else {
+    			List<WellnessEntity> wellnessEntity =  wellnessRepository.getAllData(10l, "QUARTERLY");
+    			return createWellnessList(wellnessEntity);
+    		} 
+    	} else {
+    		List<WellnessEntity> wellnessEntity =  wellnessRepository.getAllData(10l, "QUARTERLY");
+			return createWellnessList(wellnessEntity);
+    	}
+    }
+    
+    private List<Wellness> createWellnessList(List<WellnessEntity> wellnessEntity) {
+    	List<Wellness> wellnessList = new ArrayList<Wellness>();
+    	for(WellnessEntity entity : wellnessEntity) {
+    		Wellness wellness = new Wellness();
+    		wellness.setEmpid(entity.getEmpid()).setGrade(entity.getGrade()).setLeaveAmt(entity.getLeaveAmt()).setShiftAmt(entity.getShiftAmt()).setOvertimeAmt(entity.getOvertimeAmt())
+    		.setRemarks(entity.getRemarks()).setRecommend(entity.getRecommend()).setScale(entity.getScale()).setType(entity.getType()).setManagerid(entity.getManagerid());
+    		wellnessList.add(wellness);
+    	}
+    	return wellnessList;
+    }
 }
