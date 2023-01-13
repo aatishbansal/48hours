@@ -1,7 +1,5 @@
 package com.ukg.entity;
 
-import java.time.LocalDate;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,18 +7,16 @@ import javax.persistence.Id;
 @Entity(name ="shift")
 public class ShiftEntity {
 
-	@Id
+	@Column(name="shiftid")
 	private Long shiftid;
 	
+	@Id
 	@Column(name ="empid")
 	private Long empid;
 	
-	@Column(name ="shiftname")
-	private String shiftname;
+	@Column(name="type")
+	private String type;
 	
-	@Column(name ="datesubmit")
-	private LocalDate datesubmit;
-
 	public Long getShiftid() {
 		return shiftid;
 	}
@@ -37,20 +33,11 @@ public class ShiftEntity {
 		this.empid = empid;
 	}
 
-	public String getShiftname() {
-		return shiftname;
+	public String getType() {
+		return type;
 	}
 
-	public void setShiftname(String shiftname) {
-		this.shiftname = shiftname;
+	public void setType(String type) {
+		this.type = type;
 	}
-
-	public LocalDate getDatesubmit() {
-		return datesubmit;
-	}
-
-	public void setDatesubmit(LocalDate datesubmit) {
-		this.datesubmit = datesubmit;
-	}
-
 }

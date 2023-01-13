@@ -1,7 +1,5 @@
 package com.ukg.entity;
 
-import java.time.LocalDate;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -10,14 +8,9 @@ import javax.persistence.Id;
 public class LeaveEntity {
 
 	@Id
-	private Long leaveid;
-	
 	@Column(name = "empid")
 	private Long empid;
-	
-	@Column(name = "datesubmit")
-	private LocalDate datesubmit;
-	
+
 	@Column(name = "Amount")
 	private Long amount;
 	
@@ -30,14 +23,6 @@ public class LeaveEntity {
 
 	public void setEmpid(Long empid) {
 		this.empid = empid;
-	}
-
-	public LocalDate getDatesubmit() {
-		return datesubmit;
-	}
-
-	public void setDatesubmit(LocalDate datesubmit) {
-		this.datesubmit = datesubmit;
 	}
 
 	public Long getAmount() {

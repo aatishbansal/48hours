@@ -1,32 +1,28 @@
 package com.ukg.entity;
 
-import java.time.LocalDate;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity(name = "overtime")
 public class OvertimeEntity {
-
-	@Id
-	private Long overtimeid;
 	
+	@Id
 	@Column(name ="empid")
 	private Long empid;
-	
-	@Column(name ="datesubmit")
-	private LocalDate datesubmit;
 		
 	@Column(name ="durationhrs")
 	private Long durationhrs;
+	
+	@Column
+	private String type;
 
-	public Long getOvertimeid() {
-		return overtimeid;
+	public String getType() {
+		return type;
 	}
 
-	public void setOvertimeid(Long overtimeid) {
-		this.overtimeid = overtimeid;
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public Long getEmpid() {
@@ -35,14 +31,6 @@ public class OvertimeEntity {
 
 	public void setEmpid(Long empid) {
 		this.empid = empid;
-	}
-
-	public LocalDate getDatesubmit() {
-		return datesubmit;
-	}
-
-	public void setDatesubmit(LocalDate datesubmit) {
-		this.datesubmit = datesubmit;
 	}
 
 	public Long getDurationhrs() {

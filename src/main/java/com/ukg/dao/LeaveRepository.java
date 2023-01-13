@@ -9,9 +9,9 @@ import com.ukg.entity.LeaveEntity;
 
 public interface LeaveRepository extends JpaRepository<LeaveEntity, Long> {
 
-	@Query(value = "select empid, sum(amount) as amount, 'MONTHLY' as TYPE from leave l where datesubmit > (CURRENT_DATE - INTERVAL '30 days') and  type != 'SICK_LEAVE' group by empid")
+	@Query(value = "select empid, sum(amount) as amount, 'MONTHLY' as TYPE from employeewellbeing.leave where datesubmit > (CURRENT_DATE - INTERVAL '30 days') and  type != 'SICK_LEAVE' group by empid", nativeQuery = true)
 	List<LeaveEntity> findAllEmployeeFromLastMonth();
 	
-	@Query(value = "select empid, sum(amount) as amount, 'QUARTERLY' as TYPE from leave l where datesubmit > (CURRENT_DATE - INTERVAL '90 days') and  type != 'SICK_LEAVE' group by empid")
+	@Query(value = "select empid, sum(amount) as amount, 'QUARTERLY' as TYPE from employeewellbeing.leave where datesubmit > (CURRENT_DATE - INTERVAL '90 days') and  type != 'SICK_LEAVE' group by empid", nativeQuery = true)
 	List<LeaveEntity> findAllEmployeeFromLastQuarter();
 }
