@@ -118,17 +118,16 @@ public class DataController {
     @GetMapping(path="empwellness/stress")
     private StressCount getStressCount(@RequestParam(defaultValue = "Last 30 days")  String type, @RequestParam(defaultValue = "High Stress") String grade) {
     	if("Last 30 days".equalsIgnoreCase(type)) {
-    		int employeeCount = employeeRepository.findTotalEmployees();
-			long count = empWellnessRepository.findcountpergrade(grade, "MONTHLY");
-			Double percentage = (double) ((count/employeeCount) * 100);
+    		int employeeCount = employeeRepository.findTotalEmployees(10l);
+			long count = empWellnessRepository.findcountpergrade(grade, "MONTHLY", 10l);
+			Double percentage = (double) ((count * 100) /employeeCount );
 			return new StressCount().setCount(count).setPercentage(percentage).setType(grade);
 		} else {
-			int employeeCount = employeeRepository.findTotalEmployees();
-			long count = empWellnessRepository.findcountpergrade(grade, "QUARTERLY");
-			Double percentage = (double) ((count/employeeCount) * 100);
+			int employeeCount = employeeRepository.findTotalEmployees(10l);
+			long count = empWellnessRepository.findcountpergrade(grade, "QUARTERLY", 10l);
+			Double percentage = (double) ((count * 100) /employeeCount );
 			return new StressCount().setCount(count).setPercentage(percentage).setType(grade);
 		} 
     }
-    
     
 }

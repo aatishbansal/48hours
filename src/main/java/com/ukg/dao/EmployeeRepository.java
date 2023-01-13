@@ -7,6 +7,6 @@ import com.ukg.entity.EmployeeEntity;
 
 public interface EmployeeRepository extends JpaRepository<EmployeeEntity, Long>{
 
-	@Query(value = "select count(*) from employeewellbeing.employee", nativeQuery = true)
-	int findTotalEmployees();
+	@Query(value = "select count(*) from employeewellbeing.employee where managerid=?", nativeQuery = true)
+	int findTotalEmployees(long managerId);
 }
