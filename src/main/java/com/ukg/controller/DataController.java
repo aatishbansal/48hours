@@ -80,17 +80,17 @@ public class DataController {
     }
     
     @GetMapping(path = "/empwellness/{type}")
-    public List<Wellness> getAllData(@PathVariable("type") String type) {
+    public List<Wellness> getAllData(@RequestParam(defaultValue = "Last 30 days")  String type, @RequestParam(defaultValue = "High Stress") String grade) {
     	if(type != null) {    		
     		if("Last 30 days".equalsIgnoreCase(type)) {
-    			List<WellnessEntity> wellnessEntity =  wellnessRepository.getAllData(10l, "MONTHLY");
+    			List<WellnessEntity> wellnessEntity =  wellnessRepository.getAllData(10l, "MONTHLY", grade);
     			return createWellnessList(wellnessEntity);
     		} else {
-    			List<WellnessEntity> wellnessEntity =  wellnessRepository.getAllData(10l, "QUARTERLY");
+    			List<WellnessEntity> wellnessEntity =  wellnessRepository.getAllData(10l, "QUARTERLY", grade);
     			return createWellnessList(wellnessEntity);
     		} 
     	} else {
-    		List<WellnessEntity> wellnessEntity =  wellnessRepository.getAllData(10l, "QUARTERLY");
+    		List<WellnessEntity> wellnessEntity =  wellnessRepository.getAllData(10l, "QUARTERLY", grade);
 			return createWellnessList(wellnessEntity);
     	}
     }
@@ -100,7 +100,7 @@ public class DataController {
     	for(WellnessEntity entity : wellnessEntity) {
     		Wellness wellness = new Wellness();
     		wellness.setEmpid(entity.getEmpid()).setGrade(entity.getGrade()).setLeaveAmt(entity.getLeaveAmt()).setShiftAmt(entity.getShiftAmt()).setOvertimeAmt(entity.getOvertimeAmt())
-    		.setRemarks(entity.getRemarks()).setRecommend(entity.getRecommend()).setScale(entity.getScale()).setType(entity.getType()).setManagerid(entity.getManagerid());
+    		.setRemarks(entity.getRemarks()).setRecommend(entity.getRecommend()).setScale(entity.getScale()).setType(entity.getType()).setManagerid(entity.getManagerid()).setName(entity.getName());
     		wellnessList.add(wellness);
     	}
     	return wellnessList;

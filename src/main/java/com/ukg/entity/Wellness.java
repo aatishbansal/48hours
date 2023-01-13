@@ -2,6 +2,8 @@ package com.ukg.entity;
 
 public class Wellness {
 	
+	private String name;
+	
 	private Long empid;
 	
 	private Long managerid;
@@ -110,6 +112,15 @@ public class Wellness {
 
 	public Wellness setRecommend(String recommend) {
 		this.recommend = recommend;
+		return this;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Wellness setName(String name) {
+		this.name = name;
 		return this;
 	}
 }

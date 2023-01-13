@@ -13,6 +13,9 @@ public class WellnessEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long empwellnessid;
 	
+	@Column(name="name")
+	private String name;
+	
 	@Column(name ="empid")
 	private Long empid;
 	
@@ -141,5 +144,13 @@ public class WellnessEntity {
 	public WellnessEntity setRecommend(String recommend) {
 		this.recommend = recommend;
 		return this;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }
