@@ -13,9 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ukg.dao.EmpRecommendRepository;
 import com.ukg.dao.EmpWellnessRepository;
+import com.ukg.dao.EmployeeDataRepository;
 import com.ukg.dao.EmployeeRepository;
 import com.ukg.dao.LeaveRepository;
 import com.ukg.dao.WellnessRepository;
+import com.ukg.entity.EmployeeData;
+import com.ukg.entity.EmployeeDataEntity;
 import com.ukg.entity.Leave;
 import com.ukg.entity.LeaveEntity;
 import com.ukg.entity.StressCount;
@@ -40,6 +43,9 @@ public class DataController {
 	
 	@Autowired
 	private EmployeeRepository employeeRepository;
+	
+	@Autowired
+	private EmployeeDataRepository employeeDataRepository; 
 
 	@GetMapping(path="/leavedetails")
 	public List<Leave> getLeaveDetails() {
@@ -115,7 +121,7 @@ public class DataController {
     	return wellnessList;
     }
     
-    @GetMapping(path="empwellness/stress")
+    @GetMapping(path="/empwellness/stress")
     private StressCount getStressCount(@RequestParam(defaultValue = "Last 30 days")  String type, @RequestParam(defaultValue = "High Stress") String grade) {
     	if("Last 30 days".equalsIgnoreCase(type)) {
     		int employeeCount = employeeRepository.findTotalEmployees(10l);
@@ -127,6 +133,21 @@ public class DataController {
 			long count = empWellnessRepository.findcountpergrade(grade, "QUARTERLY", 10l);
 			Double percentage = (double) ((count * 100) /employeeCount );
 			return new StressCount().setCount(count).setPercentage(percentage+ "%").setType(grade);
+		} 
+    }
+    
+    @GetMapping(path="/empwellness/data")
+    private EmployeeData getEmployeeData(@RequestParam(defaultValue = "Last 30 days")  String type) {
+    	if("Last 30 days".equalsIgnoreCase(type)) {
+    		EmployeeDataEntity entity = employeeDataRepository.getEmployeeData("MONTHLY", 10l);
+    		return new EmployeeData().setEmpid(entity.getEmpid()).setGrade(entity.getGrade()).setLeaveAmt(entity.getLeaveAmt()).setShiftAmt(entity.getShiftAmt()).setOvertimeAmt(entity.getOvertimeAmt())
+    	    		.setRemarks(entity.getRemarks()).setRecommend(entity.getRecommend()).setScale(entity.getScale()).setType(entity.getType()).setManagerid(entity.getManagerid()).setName(entity.getName())
+    	    		.setCurrentRole(entity.getCurrentRole()).setBenefits(entity.getBenefits()).setHiredate(entity.getHiredate()).setTenure(entity.getTenure());
+		} else {
+			EmployeeDataEntity entity = employeeDataRepository.getEmployeeData("QUARTERLY", 10l);
+			return new EmployeeData().setEmpid(entity.getEmpid()).setGrade(entity.getGrade()).setLeaveAmt(entity.getLeaveAmt()).setShiftAmt(entity.getShiftAmt()).setOvertimeAmt(entity.getOvertimeAmt())
+    	    		.setRemarks(entity.getRemarks()).setRecommend(entity.getRecommend()).setScale(entity.getScale()).setType(entity.getType()).setManagerid(entity.getManagerid()).setName(entity.getName())
+    	    		.setCurrentRole(entity.getCurrentRole()).setBenefits(entity.getBenefits()).setHiredate(entity.getHiredate()).setTenure(entity.getTenure());
 		} 
     }
     
