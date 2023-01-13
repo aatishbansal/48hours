@@ -27,7 +27,7 @@ public class DataController {
 			Leave l = new Leave();
 			l.setEmpid(entity.getEmpid());
 			l.setAmount(entity.getAmount());
-			l.setDatesubmit(entity.getDatesubmit());
+			//l.setDatesubmit(entity.getDatesubmit());
 			l.setType(entity.getType());
 			leaveLst.add(l);
 		}
