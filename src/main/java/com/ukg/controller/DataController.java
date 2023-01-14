@@ -142,12 +142,12 @@ public class DataController {
     		EmployeeDataEntity entity = employeeDataRepository.getEmployeeData("MONTHLY", 10l);
     		return new EmployeeData().setEmpid(entity.getEmpid()).setGrade(entity.getGrade()).setLeaveAmt(entity.getLeaveAmt()).setShiftAmt(entity.getShiftAmt()).setOvertimeAmt(entity.getOvertimeAmt())
     	    		.setRemarks(entity.getRemarks()).setRecommend(entity.getRecommend()).setScale(entity.getScale()).setType(entity.getType()).setManagerid(entity.getManagerid()).setName(entity.getName())
-    	    		.setCurrentRole(entity.getCurrentRole()).setBenefits(entity.getBenefits()).setHiredate(entity.getHiredate()).setTenure(entity.getTenure());
+    	    		.setCurrentRole(entity.getCurrentRole()).setBenefits(entity.getBenefits()).setHiredate(entity.getHiredate()).setTenure(entity.getTenure()).setShift(entity.getShift());
 		} else {
 			EmployeeDataEntity entity = employeeDataRepository.getEmployeeData("QUARTERLY", 10l);
 			return new EmployeeData().setEmpid(entity.getEmpid()).setGrade(entity.getGrade()).setLeaveAmt(entity.getLeaveAmt()).setShiftAmt(entity.getShiftAmt()).setOvertimeAmt(entity.getOvertimeAmt())
     	    		.setRemarks(entity.getRemarks()).setRecommend(entity.getRecommend()).setScale(entity.getScale()).setType(entity.getType()).setManagerid(entity.getManagerid()).setName(entity.getName())
-    	    		.setCurrentRole(entity.getCurrentRole()).setBenefits(entity.getBenefits()).setHiredate(entity.getHiredate()).setTenure(entity.getTenure());
+    	    		.setCurrentRole(entity.getCurrentRole()).setBenefits(entity.getBenefits()).setHiredate(entity.getHiredate()).setTenure(entity.getTenure()).setShift(entity.getShift());
 		} 
     }
     

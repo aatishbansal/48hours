@@ -30,6 +30,9 @@ public class EmployeeDataEntity {
 	@Column(name="benefits")
 	private String benefits;
 	
+	@Column(name="shift")
+	private String shift;
+	
 	@Column(name ="empid")
 	private Long empid;
 	
@@ -198,5 +201,13 @@ public class EmployeeDataEntity {
 
 	public void setBenefits(String benefits) {
 		this.benefits = benefits;
+	}
+
+	public String getShift() {
+		return shift;
+	}
+
+	public void setShift(String shift) {
+		this.shift = shift;
 	}
 }

@@ -34,6 +34,8 @@ public class EmployeeData {
 	
 	private String recommend;
 	
+	private String shift;
+	
 
 	public Long getEmpid() {
 		return empid;
@@ -167,6 +169,15 @@ public class EmployeeData {
 
 	public EmployeeData setBenefits(String benefits) {
 		this.benefits = benefits;
+		return this;
+	}
+
+	public String getShift() {
+		return shift;
+	}
+
+	public EmployeeData setShift(String shift) {
+		this.shift = shift;
 		return this;
 	}
 
