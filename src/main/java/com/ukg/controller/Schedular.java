@@ -57,6 +57,7 @@ public class Schedular {
 	
 	@Scheduled(fixedRate = 10000, initialDelay = 1000)
 	public void fixedRateSchedular() {
+		System.out.println("scheduler starts");
 		employeeWellnessMap = new HashMap<>();
 		employeeOverallRecommendMap = new HashMap<>();
 		empRecommendEntity = empRecommendRepository.findAll();
@@ -101,6 +102,7 @@ public class Schedular {
 			}
 		}
 		
+		System.out.println("scheduler complete");
 		employeeOverallRecommendMap.clear();
 	}
 
@@ -130,14 +132,14 @@ public class Schedular {
 			long overtimescale = ((e.getOvertimeAmt() != null) ? calculateOvertimeForMonth(e.getOvertimeAmt()) : 1);
 			long shiftscale = ((e.getShiftAmt() != null) ? calculateShiftForMonth(e.getShiftAmt()) : 1);
 			
-			long scale = leavescale + overtimescale + shiftscale;			
-			e.setScale(scale);
+			double scale = ((leavescale * 30.0) /100) + ((overtimescale * 40.0)/100)  + ((shiftscale * 30.0)/ 100);			
+			e.setScale((long)scale);
 			
-			if(scale<=3) {
+			if(e.getScale()<=3) {
 				e.setGrade("Congratulations you have managed stress");
-			} else if(scale>=4 && scale <=5) {
+			} else if(e.getScale()>=4 && e.getScale() <=5) {
 				e.setGrade("Moderate Stress");
-			} else if(scale>=6 && scale <=8) {
+			} else if(e.getScale()>=6 && e.getScale() <=8) {
 				e.setGrade("Stressed");
 			} else {
 				e.setGrade("High Stress");
@@ -212,14 +214,14 @@ public class Schedular {
 			long overtimescale = ((e.getOvertimeAmt() != null) ? calculateOvertimeForBiMonth(e.getOvertimeAmt()) : 1);
 			long shiftscale = ((e.getShiftAmt() != null) ? calculateShiftForBiMonth(e.getShiftAmt()) : 1);
 			
-			long scale = leavescale + overtimescale + shiftscale;			
-			e.setScale(scale);
+			double scale = ((leavescale * 30.0) /100) + ((overtimescale * 40.0)/100)  + ((shiftscale * 30.0)/ 100);			
+			e.setScale((long)scale);
 			
-			if(scale<=3) {
+			if(e.getScale()<=3) {
 				e.setGrade("Congratulations you have managed stress");
-			} else if(scale>=4 && scale <=5) {
+			} else if(e.getScale()>=4 && e.getScale() <=5) {
 				e.setGrade("Moderate Stress");
-			} else if(scale>=6 && scale <=8) {
+			} else if(e.getScale()>=6 && e.getScale() <=8) {
 				e.setGrade("Stressed");
 			} else {
 				e.setGrade("High Stress");
@@ -291,14 +293,14 @@ public class Schedular {
 			long overtimescale = ((e.getOvertimeAmt() != null) ? calculateOvertime(e.getOvertimeAmt()) : 1);
 			long shiftscale = ((e.getShiftAmt() != null) ? calculateShift(e.getShiftAmt()) : 1);
 			
-			long scale = leavescale + overtimescale + shiftscale;			
-			e.setScale(scale);
+			double scale = ((leavescale * 30.0) /100) + ((overtimescale * 40.0)/100)  + ((shiftscale * 30.0)/ 100);			
+			e.setScale((long)scale);
 			
-			if(scale<=3) {
+			if(e.getScale()<=3) {
 				e.setGrade("Congratulations you have managed stress");
-			} else if(scale>=4 && scale <=5) {
+			} else if(e.getScale()>=4 && e.getScale() <=5) {
 				e.setGrade("Moderate Stress");
-			} else if(scale>=6 && scale <=8) {
+			} else if(e.getScale()>=6 && e.getScale() <=8) {
 				e.setGrade("Stressed");
 			} else {
 				e.setGrade("High Stress");
