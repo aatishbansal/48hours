@@ -39,6 +39,9 @@ public class EmployeeDataEntity {
 	@Column(name="manageid")
 	private Long managerid;
 	
+	@Column(name="managername")
+	private String managername;
+	
 	@Column(name="scale")
 	private Long scale;
 	
@@ -62,6 +65,9 @@ public class EmployeeDataEntity {
 	
 	@Column(name="recommend")
 	private String recommend;
+	
+	@Column(name="avatar")
+	private String avatar;
 	
 
 	public Long getEmpid() {
@@ -209,5 +215,21 @@ public class EmployeeDataEntity {
 
 	public void setShift(String shift) {
 		this.shift = shift;
+	}
+
+	public String getManagername() {
+		return managername;
+	}
+
+	public void setManagername(String managername) {
+		this.managername = managername;
+	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 }

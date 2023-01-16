@@ -263,9 +263,9 @@ public class Schedular {
 	}
 	
 	private long calculateShiftForMonth(Long shiftAmt) {
-		if(shiftAmt>=1 && shiftAmt <=2) {
+		if(shiftAmt>=2 && shiftAmt <=3) {
 			return 2;
-		} else if(shiftAmt >=3 && shiftAmt <=6) {
+		} else if(shiftAmt >=4 && shiftAmt <=6) {
 			return 3;
 		} else if(shiftAmt >=7 && shiftAmt <=9) {
 			return 4;

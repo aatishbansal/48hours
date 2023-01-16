@@ -36,6 +36,10 @@ public class EmployeeData {
 	
 	private String shift;
 	
+	private String managername;
+	
+	private String avatar;
+	
 
 	public Long getEmpid() {
 		return empid;
@@ -178,6 +182,24 @@ public class EmployeeData {
 
 	public EmployeeData setShift(String shift) {
 		this.shift = shift;
+		return this;
+	}
+
+	public String getManagername() {
+		return managername;
+	}
+
+	public EmployeeData setManagername(String managername) {
+		this.managername = managername;
+		return this;
+	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public EmployeeData setAvatar(String avatar) {
+		this.avatar = avatar;
 		return this;
 	}
 
