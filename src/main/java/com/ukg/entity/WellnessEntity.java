@@ -46,6 +46,9 @@ public class WellnessEntity {
 	@Column(name="recommend")
 	private String recommend;
 	
+	@Column(name="avatar")
+	private String avatar;
+	
 
 	public Long getEmpid() {
 		return empid;
@@ -150,7 +153,17 @@ public class WellnessEntity {
 		return name;
 	}
 
-	public void setName(String name) {
+	public WellnessEntity setName(String name) {
 		this.name = name;
+		return this;
+	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public WellnessEntity setAvatar(String avatar) {
+		this.avatar = avatar;
+		return this;
 	}
 }

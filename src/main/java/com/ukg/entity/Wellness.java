@@ -24,6 +24,8 @@ public class Wellness {
 	
 	private String recommend;
 	
+	private String avatar;
+	
 
 	public Long getEmpid() {
 		return empid;
@@ -121,6 +123,15 @@ public class Wellness {
 
 	public Wellness setName(String name) {
 		this.name = name;
+		return this;
+	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public Wellness setAvatar(String avatar) {
+		this.avatar = avatar;
 		return this;
 	}
 

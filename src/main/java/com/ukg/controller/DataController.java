@@ -11,12 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ukg.dao.EmpOverallRecommendRepository;
 import com.ukg.dao.EmpRecommendRepository;
 import com.ukg.dao.EmpWellnessRepository;
 import com.ukg.dao.EmployeeDataRepository;
 import com.ukg.dao.EmployeeRepository;
 import com.ukg.dao.LeaveRepository;
 import com.ukg.dao.WellnessRepository;
+import com.ukg.entity.DataPlot;
+import com.ukg.entity.EmpOverallRecommend;
+import com.ukg.entity.EmpOverallRecommendEntity;
 import com.ukg.entity.EmployeeData;
 import com.ukg.entity.EmployeeDataEntity;
 import com.ukg.entity.Leave;
@@ -46,6 +50,9 @@ public class DataController {
 	
 	@Autowired
 	private EmployeeDataRepository employeeDataRepository; 
+	
+	@Autowired
+	private EmpOverallRecommendRepository empOverallRecommendRepository;
 
 	@GetMapping(path="/leavedetails")
 	public List<Leave> getLeaveDetails() {
@@ -98,6 +105,9 @@ public class DataController {
     		if("Last 30 days".equalsIgnoreCase(type)) {
     			List<WellnessEntity> wellnessEntity =  wellnessRepository.getAllData(10l, "MONTHLY", grade);
     			return createWellnessList(wellnessEntity);
+    		} else if("Last 60 days".equalsIgnoreCase(type)) {
+    			List<WellnessEntity> wellnessEntity =  wellnessRepository.getAllData(10l, "BIMONTHLY", grade);
+    			return createWellnessList(wellnessEntity);
     		} else {
     			List<WellnessEntity> wellnessEntity =  wellnessRepository.getAllData(10l, "QUARTERLY", grade);
     			return createWellnessList(wellnessEntity);
@@ -113,7 +123,7 @@ public class DataController {
     	for(WellnessEntity entity : wellnessEntity) {
     		Wellness wellness = new Wellness();
     		wellness.setEmpid(entity.getEmpid()).setGrade(entity.getGrade()).setLeaveAmt(entity.getLeaveAmt()).setShiftAmt(entity.getShiftAmt()).setOvertimeAmt(entity.getOvertimeAmt())
-    		.setRemarks(entity.getRemarks()).setRecommend(entity.getRecommend()).setScale(entity.getScale()).setType(entity.getType()).setManagerid(entity.getManagerid()).setName(entity.getName());
+    		.setRemarks(entity.getRemarks()).setRecommend(entity.getRecommend()).setScale(entity.getScale()).setType(entity.getType()).setManagerid(entity.getManagerid()).setName(entity.getName()).setAvatar(entity.getAvatar());
     		wellnessList.add(wellness);
     	}
     	
@@ -126,6 +136,11 @@ public class DataController {
     	if("Last 30 days".equalsIgnoreCase(type)) {
     		int employeeCount = employeeRepository.findTotalEmployees(10l);
 			long count = empWellnessRepository.findcountpergrade(grade, "MONTHLY", 10l);
+			Double percentage = (double) ((count * 100) /employeeCount );
+			return new StressCount().setCount(count).setPercentage(percentage + "%").setType(grade);
+		} else if("Last 60 days".equalsIgnoreCase(type)) {
+    		int employeeCount = employeeRepository.findTotalEmployees(10l);
+			long count = empWellnessRepository.findcountpergrade(grade, "BIMONTHLY", 10l);
 			Double percentage = (double) ((count * 100) /employeeCount );
 			return new StressCount().setCount(count).setPercentage(percentage + "%").setType(grade);
 		} else {
@@ -143,12 +158,32 @@ public class DataController {
     		return new EmployeeData().setEmpid(entity.getEmpid()).setGrade(entity.getGrade()).setLeaveAmt(entity.getLeaveAmt()).setShiftAmt(entity.getShiftAmt()).setOvertimeAmt(entity.getOvertimeAmt())
     	    		.setRemarks(entity.getRemarks()).setRecommend(entity.getRecommend()).setScale(entity.getScale()).setType(entity.getType()).setManagerid(entity.getManagerid()).setName(entity.getName())
     	    		.setCurrentRole(entity.getCurrentRole()).setBenefits(entity.getBenefits()).setHiredate(entity.getHiredate()).setTenure(entity.getTenure()).setShift(entity.getShift()).setManagername(entity.getManagername()).setAvatar(entity.getAvatar());
+		} else if("Last 60 days".equalsIgnoreCase(type)) {
+    		EmployeeDataEntity entity = employeeDataRepository.getEmployeeData("BIMONTHLY", 10l);
+    		return new EmployeeData().setEmpid(entity.getEmpid()).setGrade(entity.getGrade()).setLeaveAmt(entity.getLeaveAmt()).setShiftAmt(entity.getShiftAmt()).setOvertimeAmt(entity.getOvertimeAmt())
+    	    		.setRemarks(entity.getRemarks()).setRecommend(entity.getRecommend()).setScale(entity.getScale()).setType(entity.getType()).setManagerid(entity.getManagerid()).setName(entity.getName())
+    	    		.setCurrentRole(entity.getCurrentRole()).setBenefits(entity.getBenefits()).setHiredate(entity.getHiredate()).setTenure(entity.getTenure()).setShift(entity.getShift()).setManagername(entity.getManagername()).setAvatar(entity.getAvatar());
 		} else {
 			EmployeeDataEntity entity = employeeDataRepository.getEmployeeData("QUARTERLY", 10l);
 			return new EmployeeData().setEmpid(entity.getEmpid()).setGrade(entity.getGrade()).setLeaveAmt(entity.getLeaveAmt()).setShiftAmt(entity.getShiftAmt()).setOvertimeAmt(entity.getOvertimeAmt())
     	    		.setRemarks(entity.getRemarks()).setRecommend(entity.getRecommend()).setScale(entity.getScale()).setType(entity.getType()).setManagerid(entity.getManagerid()).setName(entity.getName())
     	    		.setCurrentRole(entity.getCurrentRole()).setBenefits(entity.getBenefits()).setHiredate(entity.getHiredate()).setTenure(entity.getTenure()).setShift(entity.getShift()).setManagername(entity.getManagername()).setAvatar(entity.getAvatar());
 		} 
+    }
+    
+    @GetMapping(path="/empwellness/empoverallrecommend")
+    private EmpOverallRecommend getEmpOverallRecommend(@RequestParam(defaultValue = "1") Long empid) {
+    	EmpOverallRecommendEntity entity = empOverallRecommendRepository.fetchEmployeeData(empid);
+    	List<DataPlot> dataPlot = new ArrayList<DataPlot>();
+    	DataPlot p1 = new DataPlot().setDuration("Last 30 days").setScale(entity.getLast30days());
+    	DataPlot p2 = new DataPlot().setDuration("Last 60 days").setScale(entity.getLast60days());
+    	DataPlot p3 = new DataPlot().setDuration("Last 90 days").setScale(entity.getLast90days());
+    	
+    	dataPlot.add(p1);
+    	dataPlot.add(p2);
+    	dataPlot.add(p3);
+    	
+    	return new EmpOverallRecommend().setEmpid(entity.getEmpid()).setOverallrecommend(entity.getOverallrecommend()).setPlot(dataPlot);
     }
     
 }
