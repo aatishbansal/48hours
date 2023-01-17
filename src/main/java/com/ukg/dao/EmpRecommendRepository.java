@@ -6,4 +6,5 @@ import com.ukg.entity.EmpRecommendEntity;
 
 public interface EmpRecommendRepository extends JpaRepository<EmpRecommendEntity, Long>{
 
+	
 }

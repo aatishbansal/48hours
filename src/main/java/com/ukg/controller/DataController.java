@@ -1,6 +1,7 @@
 package com.ukg.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ukg.dao.CountPerGradeRepository;
 import com.ukg.dao.EmpOverallRecommendRepository;
 import com.ukg.dao.EmpRecommendRepository;
 import com.ukg.dao.EmpWellnessRepository;
@@ -18,6 +20,7 @@ import com.ukg.dao.EmployeeDataRepository;
 import com.ukg.dao.EmployeeRepository;
 import com.ukg.dao.LeaveRepository;
 import com.ukg.dao.WellnessRepository;
+import com.ukg.entity.CountPerStress;
 import com.ukg.entity.DataPlot;
 import com.ukg.entity.EmpOverallRecommend;
 import com.ukg.entity.EmpOverallRecommendEntity;
@@ -26,6 +29,7 @@ import com.ukg.entity.EmployeeDataEntity;
 import com.ukg.entity.Leave;
 import com.ukg.entity.LeaveEntity;
 import com.ukg.entity.StressCount;
+import com.ukg.entity.StressDataCount;
 import com.ukg.entity.Wellness;
 import com.ukg.entity.WellnessEntity;
 
@@ -53,6 +57,9 @@ public class DataController {
 	
 	@Autowired
 	private EmpOverallRecommendRepository empOverallRecommendRepository;
+	
+	@Autowired
+	private CountPerGradeRepository countPerGradeRepository;
 
 	@GetMapping(path="/leavedetails")
 	public List<Leave> getLeaveDetails() {
@@ -150,6 +157,53 @@ public class DataController {
 			return new StressCount().setCount(count).setPercentage(percentage+ "%").setType(grade);
 		} 
     }
+    
+    private List<String> gradeArray = Arrays.asList("High Stress","Stressed","Moderate Stress","Congratulations you have managed stress");
+    @GetMapping(path ="/empwellness/stresscount")
+    private List<StressDataCount> getStressDataCount(@RequestParam(defaultValue = "Last 30 days")  String type) {
+    	List<StressDataCount> stressDataCountList = new ArrayList<>();
+    	if("Last 30 days".equalsIgnoreCase(type)) {
+    		int employeeCount = employeeRepository.findTotalEmployees(10l);
+			for(String grade : gradeArray) {
+				long count = empWellnessRepository.findcountpergrade(grade, "MONTHLY", 10l);
+	    		getData(stressDataCountList, employeeCount, grade, count);
+			}
+			return stressDataCountList;
+		} else if("Last 60 days".equalsIgnoreCase(type)) {
+    		int employeeCount = employeeRepository.findTotalEmployees(10l);
+    		for(String grade : gradeArray) {
+				long count = empWellnessRepository.findcountpergrade(grade, "BIMONTHLY", 10l);
+	    		getData(stressDataCountList, employeeCount, grade, count);
+			}
+    		return stressDataCountList;
+		} else {
+			int employeeCount = employeeRepository.findTotalEmployees(10l);
+			for(String grade : gradeArray) {
+				long count = empWellnessRepository.findcountpergrade(grade, "QUARTERLY", 10l);
+	    		getData(stressDataCountList, employeeCount, grade, count);
+			}
+    		return stressDataCountList;
+		} 
+    }
+
+	private void getData(List<StressDataCount> stressDataCountList, int employeeCount, String grade, long count) {
+		Double percentage = (double) ((count * 100.00) /employeeCount );
+		StressDataCount sdc = new StressDataCount();
+		if(grade.equalsIgnoreCase("High Stress")) {					
+			sdc.setCount(count).setPercent("<span class='span_os'>" + percentage + "%</span").setGrade("Highly Stressed &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+			stressDataCountList.add(sdc);
+		} else if(grade.equalsIgnoreCase("Stressed")) {					
+			sdc.setCount(count).setPercent("<span class='span_s'>" + percentage + "%</span").setGrade("Stressed &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+					+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+			stressDataCountList.add(sdc);
+		} else if(grade.equalsIgnoreCase("Moderate Stress")) {					
+			sdc.setCount(count).setPercent("<span class='span_mos'>" + percentage + "%</span").setGrade("Moderately Stressed");
+			stressDataCountList.add(sdc);
+		} else {
+			sdc.setCount(count).setPercent("<span class='span_mas'>" + percentage + "%</span").setGrade("Managing Stress Well &nbsp;&nbsp;");
+			stressDataCountList.add(sdc);
+		}
+	}
     
     @GetMapping(path="/empwellness/data")
     private EmployeeData getEmployeeData(@RequestParam(defaultValue = "Last 30 days")  String type) {

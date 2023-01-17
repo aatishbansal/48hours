@@ -26,7 +26,7 @@ public class EmpWellnessEntity {
 	private String grade;
 	
 	@Column(name="remarks")
-	private String remarks;
+	private Long remarks;
 	
 	@Column(name="type")
 	private String type;
@@ -77,11 +77,11 @@ public class EmpWellnessEntity {
 		return this;
 	}
 
-	public String getRemarks() {
+	public Long getRemarks() {
 		return remarks;
 	}
 
-	public EmpWellnessEntity setRemarks(String remarks) {
+	public EmpWellnessEntity setRemarks(Long remarks) {
 		this.remarks = remarks;
 		return this;
 	}

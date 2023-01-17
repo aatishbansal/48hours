@@ -18,6 +18,9 @@ public class EmpRecommendEntity {
 	
 	@Column
 	private String recommend;
+	
+	@Column
+	private String type;
 
 	public Long getEmprecommendid() {
 		return emprecommendid;
@@ -49,5 +52,13 @@ public class EmpRecommendEntity {
 
 	public void setRecommend(String recommend) {
 		this.recommend = recommend;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 }

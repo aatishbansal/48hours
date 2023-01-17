@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import com.ukg.entity.CountPerStress;
 import com.ukg.entity.EmpWellnessEntity;
 
 public interface EmpWellnessRepository extends JpaRepository<EmpWellnessEntity, Long> {
@@ -17,4 +18,7 @@ public interface EmpWellnessRepository extends JpaRepository<EmpWellnessEntity, 
 	
 	@Query(value = "select count(*) from employeewellbeing.empwellness e where grade=?1 and type=?2 and manageid=?3", nativeQuery = true)
 	int findcountpergrade(String grade, String type, Long managerid);
+	
+	@Query(value = "select count(*), grade from employeewellbeing.empwellness e where type=?1 and manageid=?2 group by grade", nativeQuery = true)
+	CountPerStress findcount(String type, Long managerid);
 }

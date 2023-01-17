@@ -95,7 +95,7 @@ public class Schedular {
 			EmpOverallRecommendEntity overallRecommendEntity = empOverallRecommendRepository.fetchEmployeeData(entry.getKey());
 			EmpOverallRecommendEntity recomendentity = entry.getValue();
 			if(overallRecommendEntity != null) {
-				overallRecommendEntity.setLast30days(recomendentity.getLast30days()).setLast60days(recomendentity.getLast60days()).setLast90days(recomendentity.getLast90days());
+				overallRecommendEntity.setLast30days(recomendentity.getLast30days()).setLast60days(recomendentity.getLast60days()).setLast90days(recomendentity.getLast90days()).setOverallrecommend(recomendentity.getOverallrecommend());
 				empOverallRecommendRepository.save(overallRecommendEntity);
 			} else {				
 				empOverallRecommendRepository.save(recomendentity);
@@ -145,32 +145,48 @@ public class Schedular {
 				e.setGrade("High Stress");
 			}
 			
-			if("Stressed".equalsIgnoreCase(e.getGrade()) || "HIGH STRESS".equalsIgnoreCase(e.getGrade())) {
+			if("HIGH STRESS".equalsIgnoreCase(e.getGrade())) {
 				if(leavescale > overtimescale && leavescale > shiftscale) {
-					e.setRemarks("Less Leaves");
+					e.setRemarks(21l);
 				} else if(overtimescale > leavescale && overtimescale > shiftscale) {
-					e.setRemarks("Overtime Hours");
+					e.setRemarks(22l);
 				} else if(shiftscale > leavescale && shiftscale > overtimescale) {
-					e.setRemarks("Night Shifts");
+					e.setRemarks(20l);
 				} else if(leavescale == overtimescale) {
-					e.setRemarks("Less Leaves and More Night Shifts");
+					e.setRemarks(24l);
 				} else if(leavescale == shiftscale) {
-					e.setRemarks("Less Leaves and Overtime Hours");
+					e.setRemarks(23l);
 				} else if(overtimescale == shiftscale) {
-					e.setRemarks("Night Shifts and Overtime Hours");
+					e.setRemarks(25l);
 				} else if(leavescale == overtimescale && leavescale == shiftscale && overtimescale == shiftscale) {
-					e.setRemarks("Night Shifts, Overtime Hours and Less Leaves");
+					e.setRemarks(26l);
 				}
-			} else if("Moderate Stress".equalsIgnoreCase(e.getGrade())) {
+			} else if("Stressed".equalsIgnoreCase(e.getGrade())) {
+				if(leavescale > overtimescale && leavescale > shiftscale) {
+					e.setRemarks(13l);
+				} else if(overtimescale > leavescale && overtimescale > shiftscale) {
+					e.setRemarks(15l);
+				} else if(shiftscale > leavescale && shiftscale > overtimescale) {
+					e.setRemarks(14l);
+				} else if(leavescale == overtimescale) {
+					e.setRemarks(17l);
+				} else if(leavescale == shiftscale) {
+					e.setRemarks(16l);
+				} else if(overtimescale == shiftscale) {
+					e.setRemarks(18l);
+				} else if(leavescale == overtimescale && leavescale == shiftscale && overtimescale == shiftscale) {
+					e.setRemarks(19l);
+				}
+			} else if("Moderate STRESS".equalsIgnoreCase(e.getGrade())) {
 				if(leavescale >= overtimescale && leavescale >= shiftscale) {
-					e.setRemarks("Less Leaves");
+					e.setRemarks(2l);
 				} else if(overtimescale >= leavescale && overtimescale >= shiftscale) {
-					e.setRemarks("Overtime Hours");
+					e.setRemarks(11l);
 				} else if(shiftscale >= leavescale && shiftscale >= overtimescale) {
-					e.setRemarks("Night Shifts");
+					e.setRemarks(12l);
 				}
 			} else {
-				e.setRemarks(CONGRATULATIONS_YOH_HAVE_MANAGED_STRESS);
+				e.setRemarks(CONGRATULATIONS_YOH_HAVE_MANAGED_STRESS_FOR_30_DAYS);
 			}
 			
 			EmpWellnessEntity ew = empWellnessRepository.findByEmpIdAndType(e.getEmpid(), e.getType());
@@ -186,7 +202,9 @@ public class Schedular {
 		}
 	}
 	
-	private static final String CONGRATULATIONS_YOH_HAVE_MANAGED_STRESS = "Doing Great !!! Your energy is currency, Spend it well.";
+	private static final Long CONGRATULATIONS_YOH_HAVE_MANAGED_STRESS_FOR_30_DAYS = 1l;
+	private static final Long CONGRATULATIONS_YOH_HAVE_MANAGED_STRESS_FOR_60_DAYS = 27l;
+	private static final Long CONGRATULATIONS_YOH_HAVE_MANAGED_STRESS_FOR_90_DAYS = 28l;
 	
 	private void calculateBiMonthlyData(List<LeaveEntity> leaveList,
 			List<OvertimeEntity> overtimeList, List<ShiftEntity> shiftList) {
@@ -227,32 +245,48 @@ public class Schedular {
 				e.setGrade("High Stress");
 			}
 			
-			if("Stressed".equalsIgnoreCase(e.getGrade()) || "HIGH STRESS".equalsIgnoreCase(e.getGrade())) {
+			if("HIGH STRESS".equalsIgnoreCase(e.getGrade())) {
 				if(leavescale > overtimescale && leavescale > shiftscale) {
-					e.setRemarks("Less Leaves");
+					e.setRemarks(54l);
 				} else if(overtimescale > leavescale && overtimescale > shiftscale) {
-					e.setRemarks("Overtime Hours");
+					e.setRemarks(52l);
 				} else if(shiftscale > leavescale && shiftscale > overtimescale) {
-					e.setRemarks("Night Shifts");
+					e.setRemarks(50l);
 				} else if(leavescale == overtimescale) {
-					e.setRemarks("Less Leaves and More Night Shifts");
+					e.setRemarks(60l);//need to change
 				} else if(leavescale == shiftscale) {
-					e.setRemarks("Less Leaves and Overtime Hours");
+					e.setRemarks(56l);
 				} else if(overtimescale == shiftscale) {
-					e.setRemarks("Night Shifts and Overtime Hours");
+					e.setRemarks(58l);
 				} else if(leavescale == overtimescale && leavescale == shiftscale && overtimescale == shiftscale) {
-					e.setRemarks("Night Shifts, Overtime Hours and Less Leaves");
+					e.setRemarks(48l);
+				}
+			} else if("Stressed".equalsIgnoreCase(e.getGrade())) {
+				if(leavescale > overtimescale && leavescale > shiftscale) {
+					e.setRemarks(38l);
+				} else if(overtimescale > leavescale && overtimescale > shiftscale) {
+					e.setRemarks(46l);
+				} else if(shiftscale > leavescale && shiftscale > overtimescale) {
+					e.setRemarks(40l);
+				} else if(leavescale == overtimescale) {
+					e.setRemarks(62l); //need to change
+				} else if(leavescale == shiftscale) {
+					e.setRemarks(44l);
+				} else if(overtimescale == shiftscale) {
+					e.setRemarks(36l);
+				} else if(leavescale == overtimescale && leavescale == shiftscale && overtimescale == shiftscale) {
+					e.setRemarks(42l);
 				}
 			} else if("Moderate STRESS".equalsIgnoreCase(e.getGrade())) {
 				if(leavescale >= overtimescale && leavescale >= shiftscale) {
-					e.setRemarks("Less Leaves");
+					e.setRemarks(30l);
 				} else if(overtimescale >= leavescale && overtimescale >= shiftscale) {
-					e.setRemarks("Overtime Hours");
+					e.setRemarks(34l);
 				} else if(shiftscale >= leavescale && shiftscale >= overtimescale) {
-					e.setRemarks("Night Shifts");
+					e.setRemarks(32l);
 				}
 			} else {
-				e.setRemarks(CONGRATULATIONS_YOH_HAVE_MANAGED_STRESS);
+				e.setRemarks(CONGRATULATIONS_YOH_HAVE_MANAGED_STRESS_FOR_60_DAYS);
 			}
 			
 			EmpWellnessEntity ew = empWellnessRepository.findByEmpIdAndType(e.getEmpid(), e.getType());
@@ -306,32 +340,48 @@ public class Schedular {
 				e.setGrade("High Stress");
 			}
 			
-			if("Stressed".equalsIgnoreCase(e.getGrade()) || "HIGH STRESS".equalsIgnoreCase(e.getGrade())) {
+			if("HIGH STRESS".equalsIgnoreCase(e.getGrade())) {
 				if(leavescale > overtimescale && leavescale > shiftscale) {
-					e.setRemarks("Less Leaves");
+					e.setRemarks(55l);
 				} else if(overtimescale > leavescale && overtimescale > shiftscale) {
-					e.setRemarks("Overtime Hours");
+					e.setRemarks(53l);
 				} else if(shiftscale > leavescale && shiftscale > overtimescale) {
-					e.setRemarks("Night Shifts");
+					e.setRemarks(51l);
 				} else if(leavescale == overtimescale) {
-					e.setRemarks("Less Leaves and More Night Shifts");
+					e.setRemarks(61l);
 				} else if(leavescale == shiftscale) {
-					e.setRemarks("Less Leaves and Overtime Hours");
+					e.setRemarks(57l);
 				} else if(overtimescale == shiftscale) {
-					e.setRemarks("Night Shifts and Overtime Hours");
+					e.setRemarks(59l);
 				} else if(leavescale == overtimescale && leavescale == shiftscale && overtimescale == shiftscale) {
-					e.setRemarks("Night Shifts, Overtime Hours and Less Leaves");
+					e.setRemarks(49l);
+				}
+			} else if("Stressed".equalsIgnoreCase(e.getGrade())) {
+				if(leavescale > overtimescale && leavescale > shiftscale) {
+					e.setRemarks(39l);
+				} else if(overtimescale > leavescale && overtimescale > shiftscale) {
+					e.setRemarks(47l);
+				} else if(shiftscale > leavescale && shiftscale > overtimescale) {
+					e.setRemarks(41l);
+				} else if(leavescale == overtimescale) {
+					e.setRemarks(63l);
+				} else if(leavescale == shiftscale) {
+					e.setRemarks(45l);
+				} else if(overtimescale == shiftscale) {
+					e.setRemarks(37l);
+				} else if(leavescale == overtimescale && leavescale == shiftscale && overtimescale == shiftscale) {
+					e.setRemarks(43l);
 				}
 			} else if("Moderate STRESS".equalsIgnoreCase(e.getGrade())) {
 				if(leavescale >= overtimescale && leavescale >= shiftscale) {
-					e.setRemarks("Less Leaves");
+					e.setRemarks(31l);
 				} else if(overtimescale >= leavescale && overtimescale >= shiftscale) {
-					e.setRemarks("Overtime Hours");
+					e.setRemarks(35l);
 				} else if(shiftscale >= leavescale && shiftscale >= overtimescale) {
-					e.setRemarks("Night Shifts");
+					e.setRemarks(33l);
 				}
 			} else {
-				e.setRemarks(CONGRATULATIONS_YOH_HAVE_MANAGED_STRESS);
+				e.setRemarks(CONGRATULATIONS_YOH_HAVE_MANAGED_STRESS_FOR_90_DAYS);
 			}
 			
 			EmpWellnessEntity ew = empWellnessRepository.findByEmpIdAndType(e.getEmpid(), e.getType());
@@ -340,10 +390,15 @@ public class Schedular {
 			else
 				empWellnessRepository.save(e);
 			
-			EmpRecommendEntity entity = empRecommendEntity.stream().filter(er -> er.getGrade().equalsIgnoreCase(e.getGrade()) && er.getRemarks().equalsIgnoreCase(e.getRemarks())).findAny().get();
-			EmpOverallRecommendEntity empOverallRecommendEntity = employeeOverallRecommendMap.get(e.getEmpid());
-			empOverallRecommendEntity.setLast90days(e.getScale()).setOverallrecommend(entity.getRecommend());
-			employeeOverallRecommendMap.put(e.getEmpid(), empOverallRecommendEntity);
+			try {
+				EmpRecommendEntity entity = empRecommendEntity.stream().filter(er -> er.getGrade().equalsIgnoreCase(e.getGrade()) && er.getEmprecommendid().equals(e.getRemarks())).findAny().get();
+				EmpOverallRecommendEntity empOverallRecommendEntity = employeeOverallRecommendMap.get(e.getEmpid());
+				empOverallRecommendEntity.setLast90days(e.getScale()).setOverallrecommend(entity.getRecommend());
+				employeeOverallRecommendMap.put(e.getEmpid(), empOverallRecommendEntity);
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+			
 		}
 	}
 
